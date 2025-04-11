@@ -56,7 +56,8 @@ int main()
 
 	printf("1: Insert an integer to the linked list:\n");
 	printf("2: Split the linked list into two linked lists, frontList and backList:\n");
-	printf("0: Quit:\n");
+	printf("0: Quit:\n");	
+	c = 3;   /// 원래 이 줄이 없었어요!! c값 0만뺴고 아무거나 넣어줘야...
 
 	while (c != 0)
 	{
@@ -101,8 +102,54 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
-{
-	/* add your code here */
+{	
+	//잘못된 코드, ll의 주소를 그대로 복사해오는거라 ll을 free 시키면 double free 발생
+	// if (ll == NULL || ll->head == NULL)
+	// 	return;
+
+	// ListNode *cur;
+	// int mid = ll->size / 2;
+	// resultFrontList->head = ll->head;
+	
+	// cur = resultFrontList-> head;
+	// if(ll->size % 2 == 1)
+	// 	mid++;
+
+	// resultFrontList->size = mid;
+	// resultBackList->size = ll->size-mid;
+	// while (mid>1){
+	// 	cur = cur->next;
+	// 	mid--;
+	// }
+
+	// resultBackList ->head = cur->next;
+	// cur->next = NULL;
+
+
+	if (ll == NULL || ll->head == NULL)
+		return;
+
+	
+	ListNode *cur;
+	int mid = ll->size / 2;
+	
+	
+	cur = ll -> head;
+	if(ll->size % 2 == 1)
+		mid++;
+
+	for(int index = 0; index < mid && cur != NULL; index++){
+		insertNode(resultFrontList,resultFrontList->size,cur->item);
+		cur = cur->next;
+
+	}
+	while (cur != NULL)
+	{
+		insertNode(resultBackList,resultBackList->size,cur->item);
+		cur = cur->next;
+	}
+	
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

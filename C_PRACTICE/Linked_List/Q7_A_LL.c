@@ -85,9 +85,54 @@ int main()
 
 ////////////////////////////////////////////////////////////////////////
 
-void RecursiveReverse(ListNode **ptrHead)
-{
-	/* add your code here */
+// void RecursiveReverse(ListNode **ptrHead)
+// {	
+	
+
+
+// 	ListNode *cur = *ptrHead;                //지금 받은 값이 큐렌트다
+
+// 	if(cur == NULL || cur->next == NULL )        //아무것도 없으면 돌아가
+// 		return;
+
+// 	if (cur->next->next == NULL){               //다음꺼의 다음꺼가 null이면
+// 		*ptrHead = cur->next;                   //다음꺼가 지금 헤드
+// 		cur->next->next = cur;                  //그 헤드의 다음꺼가 큐렌트
+// 		cur->next = NULL;                       //이럼 큐렌트가 맨 마지막이 되니 그 다음을 NULL (안하면 큐렌트 헤드 큐렌트 헤드 큐렌트 헤드 큐렌테드 큐렌테드 큐렌테드 ㅇㅇ)
+// 		return;
+// 	}
+
+// 	RecursiveReverse(&(cur->next));              //이러면 순서가 바껴서 나와요
+// 	cur->next->next = cur;                       //근데? 지금 큐렌트의 넥스트는 그대로죠(큐렌트 넥스트를 넣었지 큐렌트를 넣은게 아니니)
+// 	cur->next=NULL;                    
+
+// 	return;
+	
+
+// 	/* 넥스트를 헤드로 준다면? */
+// }
+
+
+
+
+void RecursiveReverse(ListNode **ptrHead)//지역변수와 전역변수의 개념? 인거 같은?
+{	
+	
+	ListNode *cur, *cheker;
+	cur = *ptrHead;
+	
+
+	if(cur == NULL || cur->next == NULL )
+		return;
+
+	cheker = cur-> next;
+
+	RecursiveReverse(&cheker);
+	cur->next->next = cur;
+	cur->next = NULL;
+	
+	*ptrHead = cheker;
+	/* 넥스트를 헤드로 준다면? */
 }
 
 //////////////////////////////////////////////////////////////////////////////////
