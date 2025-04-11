@@ -54,11 +54,12 @@ int main()
 	BSTNode *root;
 	root = NULL;
 
+	// 메뉴 옵션
 	printf("1: Insert an integer into the binary search tree;\n");
 	printf("2: Print the level-order traversal of the binary search tree;\n");
 	printf("0: Quit;\n");
 
-
+	// 사용자가 0을 입력할 때까지
 	while (c != 0)
 	{
 		printf("Please input your choice(1/2/0): ");
@@ -66,17 +67,17 @@ int main()
 
 		switch (c)
 		{
-		case 1:
+		case 1: // BST에 정수 삽입
 			printf("Input an integer that you want to insert into the Binary Search Tree: ");
 			scanf("%d", &i);
 			insertBSTNode(&root, i);
 			break;
-		case 2:
+		case 2: // BST를 레벨 순회 방식으로 출력
 			printf("The resulting level-order traversal of the binary search tree is: ");
 			levelOrderTraversal(root); // You need to code this function
 			printf("\n");
 			break;
-		case 0:
+		case 0: // 동적 메모리 해제 후 종료
 			removeAll(&root);
 			break;
 		default:
@@ -94,7 +95,26 @@ int main()
 void levelOrderTraversal(BSTNode* root)
 {
 
-    /* add your code here */
+    if (root == NULL)
+		return;
+	
+	QueueNode *head = NULL;
+	QueueNode *tail = NULL;
+
+	enqueue(&head, &tail, root);
+
+	while (!isEmpty(head))
+	{
+		BSTNode *current = dequeue(&head, &tail);
+
+		printf("%d ", current->item);
+
+		if (current->left != NULL)
+			enqueue(&head, &tail, current->left);
+
+		if (current->right != NULL)
+			enqueue(&head, &tail, current->right);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -102,25 +122,29 @@ void levelOrderTraversal(BSTNode* root)
 void insertBSTNode(BSTNode **node, int value){
 	if (*node == NULL)
 	{
-		*node = malloc(sizeof(BSTNode));
+		*node = malloc(sizeof(BSTNode));	// 새 노드를 동적 메모리 할당
 
-		if (*node != NULL) {
-			(*node)->item = value;
-			(*node)->left = NULL;
+		if (*node != NULL) {				// 할당 성공하면
+			(*node)->item = value;			// 값을 저장하고
+			(*node)->left = NULL;			// 좌측, 우측 자식을 NULL로 초기화
 			(*node)->right = NULL;
 		}
 	}
 	else
 	{
+		// 현재 노드에 값이 이미 있다면, 값 비교 후 재귀적으로 적절한 서브트리에 삽입
 		if (value < (*node)->item)
 		{
+			// 새로운 값이 현재 노드의 값보다 작으면, 왼쪽 서브트리에 삽입
 			insertBSTNode(&((*node)->left), value);
 		}
 		else if (value >(*node)->item)
 		{
+			// 새로운 값이 현재 노드의 값보다 크면, 오른쪽 서브트리에 삽입
 			insertBSTNode(&((*node)->right), value);
 		}
 		else
+		 	// 같은 값은 중복 삽입 X
 			return;
 	}
 }
