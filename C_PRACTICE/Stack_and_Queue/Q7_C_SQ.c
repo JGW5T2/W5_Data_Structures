@@ -104,7 +104,32 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+	Stack *s;
+	s = malloc(sizeof(Stack));
+	char checker;
+	
+	while (expression[0] != '\0') //문자열 끝이 \0인지 확인인
+	{
+		checker = expression[0];
+		if (checker == '(' || checker == '{' || checker == '[')
+			push(s,checker);
+		
+		else if (checker == ')' && pop(s) != 40)
+			return 0;
+		
+		else if (checker == '}' && pop(s) != 123)
+			return 0;
+		
+		else if (checker == ']' && pop(s) != 91)
+			return 0;
+		
+		
+		expression += 1;  //중요!! 포인터니까 주소값만 올려주면 그게 슬라이싱임
+	}
+	if (!isEmptyStack(s))
+		return 0;
+	free(s);
+	return 1;	
 }
 
 ////////////////////////////////////////////////////////////
