@@ -11,23 +11,27 @@ Purpose: Implementing the required functions for Question 1 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
-typedef struct _listnode
+typedef struct  _listnode
 {
 	int item;
-	struct _listnode *next;
-} ListNode;	// You should not change the definition of ListNode
+	struct  _listnode *next;
+	
+} ListNode;
 
-typedef struct _linkedlist
+
+typedef struct _linkedList
 {
 	int size;
-	ListNode *head;
-} LinkedList;	// You should not change the definition of LinkedList
+	ListNode *head;	
+} LinkedList;
 
 
 typedef struct _queue
 {
 	LinkedList ll;
-} Queue;  // You should not change the definition of Queue
+} Queue;
+ 
+
 
 ///////////////////////// function prototypes ////////////////////////////////////
 
@@ -116,29 +120,52 @@ int main()
 
 void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
-	/* add your code here */
+	removeAllItemsFromQueue(q);
+	while (ll->head != NULL)
+	{
+		enqueue(q,ll->head->item);
+		removeNode(ll, 0);
+		
+	}
+	
+	return;
+
 }
 
 void removeOddValues(Queue *q)
 {
-	/* add your code here */
+	int index = 0;
+	ListNode *cur = q->ll.head;
+	while (cur != NULL)
+	{
+		if (cur->item % 2 == 1){
+			removeNode(&(q->ll),index);
+			cur = findNode(&(q->ll), index);
+		}
+
+		else{
+			index++;
+			cur = cur->next;
+		}
+	}
+	return;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
 
 void enqueue(Queue *q, int item) {
-	insertNode(&(q->ll), q->ll.size, item);
+	insertNode(&(q->ll), q->ll.size, item);  //포인터면 -> 을 쓰는데 구조체면 . ll은 위에서 포인터가 아니었으니 . 사용
 }
 
-int dequeue(Queue *q) {
+int dequeue(Queue *q){
 	int item;
 
-	if (!isEmptyQueue(q)) {
-		item = ((q->ll).head)->item;
-		removeNode(&(q->ll), 0);
+	if(!isEmptyQueue(q)) {
+		item = ((q->ll).head)->item; // . 이 -> 보다 우선순위, 풀어서 써버리면 q->(ll.head->item) 으로 인식식
+		removeNode(&(q->ll),0);
 		return item;
 	}
-	return -1;
+
 }
 
 int isEmptyQueue(Queue *q) {
@@ -147,15 +174,15 @@ int isEmptyQueue(Queue *q) {
 	return 0;
 }
 
-void removeAllItemsFromQueue(Queue *q)
-{
+void removeAllItemsFromQueue(Queue *q){
 	int count, i;
-	if (q == NULL)
+	if(q == NULL)
 		return;
-	count = q->ll.size;
+	count - q->ll.size;
 
-	for (i = 0; i < count; i++)
+	for(i = 0; i<count; i++){
 		dequeue(q);
+	}
 }
 
 
