@@ -112,7 +112,26 @@ int main()
 
 void reverse(Queue *q)
 {
-/* add your code here */
+	//큐에서 팝한다
+	//스택에 푸시한다
+	//스택에서 팝한다
+	//큐에 푸시한다
+	//큐가 비어있지 않으면 반복한다
+	Stack s;
+	s.ll.head = NULL;
+	s.ll.size = 0;
+	s.ll.tail = NULL;
+
+	int item;
+	while (!isEmptyQueue(q)) {
+		item = dequeue(q);
+		push(&s, item);
+	}
+	
+	while (!isEmptyStack(&s)) {
+		item = pop(&s);
+		enqueue(q, item);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -104,7 +104,37 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+	// 밸런스가 맞으면 1, 아니면 0을 리턴한다.
+	// 스택으로 괄호 짝 맞춘다.
+	// 스택이 비어있으면 괄호가 맞는것이다.
+	// 스택이 비어있지 않으면 괄호가 맞지 않는것이다.
+	// 스택에 괄호를 넣고 pop을 하여 짝을 맞춘다.
+	// 스택에 넣을때는 괄호의 종류에 따라 넣는다.
+	// 스택에서 pop할때는 괄호의 종류에 따라 pop한다.
+	// 스택에 넣을때는 괄호의 종류에 따라 넣는다.
+	Stack s;
+	s.ll.head = NULL;
+	s.ll.size = 0;
+	
+	while (*expression){
+		char c = *expression;
+
+		if (c == '(' || c =='[' || c == '{'){
+			push(&s, c);
+		}
+		else if (c == ')'|| c ==']' || c == '}'){
+			if(isEmptyStack(&s)) return 0;
+
+			char top = pop(&s);
+			if ((c == ')' && top != '(')||
+					(c == ']' && top != '[')||
+					(c == '}' && top != '{')) {
+						return 0;
+					}
+		}
+		expression++;
+	}
+	return !isEmptyStack(&s);
 }
 
 ////////////////////////////////////////////////////////////
