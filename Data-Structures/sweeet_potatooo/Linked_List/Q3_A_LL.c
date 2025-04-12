@@ -2,7 +2,7 @@
 
 /* CE1007/CZ1007 Data Structures
 Lab Test: Section A - Linked List Questions
-Purpose: Implementing the required functions for Question 2 */
+Purpose: Implementing the required functions for Question 3 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -27,69 +27,52 @@ typedef struct _linkedlist
 //////////////////////// function prototypes /////////////////////////////////////
 
 // You should not change the prototype of this function
-void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2);
+void moveOddItemsToBack(LinkedList *ll);
 
 void printList(LinkedList *ll);
 void removeAllItems(LinkedList *ll);
-ListNode *findNode(LinkedList *ll, int index);
+ListNode * findNode(LinkedList *ll, int index);
 int insertNode(LinkedList *ll, int index, int value);
 int removeNode(LinkedList *ll, int index);
-
 
 //////////////////////////// main() //////////////////////////////////////////////
 
 int main()
 {
-	LinkedList ll1, ll2;
+	LinkedList ll;
 	int c, i, j;
 	c = 1;
 	//Initialize the linked list 1 as an empty linked list
-	ll1.head = NULL;
-	ll1.size = 0;
+	ll.head = NULL;
+	ll.size = 0;
 
-	//Initialize the linked list 2 as an empty linked list
-	ll2.head = NULL;
-	ll2.size = 0;
 
-	printf("1: Insert an integer to the linked list 1:\n");
-	printf("2: Insert an integer to the linked list 2:\n");
-	printf("3: Create the alternate merged linked list:\n");
+	printf("1: Insert an integer to the linked list:\n");
+	printf("2: Move all odd integers to the back of the linked list:\n");
 	printf("0: Quit:\n");
 
 	while (c != 0)
 	{
-		printf("Please input your choice(1/2/3/0): ");
+		printf("Please input your choice(1/2/0): ");
 		scanf("%d", &c);
 
 		switch (c)
 		{
 		case 1:
-			printf("Input an integer that you want to add to the linked list 1: ");
+			printf("Input an integer that you want to add to the linked list: ");
 			scanf("%d", &i);
-			j = insertNode(&ll1, ll1.size, i);
-			printf("Linked list 1: ");
-			printList(&ll1);
+			j = insertNode(&ll, ll.size, i);
+			printf("The resulting linked list is: ");
+			printList(&ll);
 			break;
 		case 2:
-			printf("Input an integer that you want to add to the linked list 2: ");
-			scanf("%d", &i);
-			j = insertNode(&ll2, ll2.size, i);
-			printf("Linked list 2: ");
-			printList(&ll2);
-			break;
-		case 3:
-		    printf("The resulting linked lists after merging the given linked list are:\n");
-			alternateMergeLinkedList(&ll1, &ll2); // You need to code this function
-			printf("The resulting linked list 1: ");
-			printList(&ll1);
-			printf("The resulting linked list 2: ");
-			printList(&ll2);
-			removeAllItems(&ll1);
-			removeAllItems(&ll2);
+			moveOddItemsToBack(&ll); // You need to code this function
+			printf("The resulting linked list after moving odd integers to the back of the linked list is: ");
+			printList(&ll);
+			removeAllItems(&ll);
 			break;
 		case 0:
-			removeAllItems(&ll1);
-			removeAllItems(&ll2);
+			removeAllItems(&ll);
 			break;
 		default:
 			printf("Choice unknown;\n");
@@ -101,9 +84,49 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
+void moveOddItemsToBack(LinkedList *ll)
 {
-    /* add your code here */
+	//리스트 빈 경우 바로 리턴
+	if ((ll == NULL) || (ll->head == NULL)) {
+		return;
+	}
+
+	ListNode *evenHead = NULL, *evenTail = NULL;
+	ListNode *oddHead = NULL, *oddTail = NULL;
+	ListNode *current =ll ->head;
+	ListNode *nextnode = NULL;
+
+	while (current != NULL){
+		nextnode = current->next;
+		current->next = NULL;
+
+		if (current->item % 2 != 0)
+		{
+			if (oddHead == NULL)
+            {
+                oddHead = current;
+                oddTail = current;
+            }
+            else
+            {
+                oddTail->next = current;
+                oddTail = current;
+            }
+        }
+        else
+        {
+            if (evenHead == NULL)
+            {
+                evenHead = current;
+                evenTail = current;
+            }
+            else
+            {
+                evenTail->next = current;
+                evenTail = current;
+            }
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

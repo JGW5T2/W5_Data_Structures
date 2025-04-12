@@ -2,14 +2,12 @@
 
 /* CE1007/CZ1007 Data Structures
 Lab Test: Section C - Stack and Queue Questions
-Purpose: Implementing the required functions for Question 7 */
+Purpose: Implementing the required functions for Question 1 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
 #include <stdio.h>
 #include <stdlib.h>
-
-#define MIN_INT -1000
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -26,70 +24,82 @@ typedef struct _linkedlist
 } LinkedList;	// You should not change the definition of LinkedList
 
 
-typedef struct stack
+typedef struct _queue
 {
 	LinkedList ll;
-} Stack; // You should not change the definition of stack
+} Queue;  // You should not change the definition of Queue
 
 ///////////////////////// function prototypes ////////////////////////////////////
 
 // You should not change the prototypes of these functions
-int balanced(char *expression);
+void createQueueFromLinkedList(LinkedList *ll, Queue *q);
+void removeOddValues(Queue *q);
 
-void push(Stack *s, int item);
-int pop(Stack *s);
-int peek(Stack *s);
-int isEmptyStack(Stack *s);
-void removeAllItemsFromStack(Stack *s);
+void enqueue(Queue *q, int item);
+int dequeue(Queue *q);
+int isEmptyQueue(Queue *q);
+void removeAllItemsFromQueue(Queue *q);
 
 void printList(LinkedList *ll);
-void removeAllItems(LinkedList *ll);
 ListNode * findNode(LinkedList *ll, int index);
 int insertNode(LinkedList *ll, int index, int value);
 int removeNode(LinkedList *ll, int index);
+void removeAllItems(LinkedList *ll);
 
 //////////////////////////// main() //////////////////////////////////////////////
 
 int main()
 {
-	char ch, str[256];
 	int c, i;
-	c = 1;
-
 	LinkedList ll;
-	Stack s;
+	Queue q;
+
+	c = 1;
 
 	// Initialize the linked list as an empty linked list
 	ll.head = NULL;
 	ll.size = 0;
 
-	// Initalize the stack as an empty stack
-	s.ll.head = NULL;
-	s.ll.size = 0;
+	// Initialize the Queue as an empty queue
+	q.ll.head = NULL;
+	q.ll.size = 0;
 
-	printf("1: Enter a string:\n");
-	printf("2: Check whether expressions comprised of the characters ()[]{} is balanced:\n");
+
+	printf("1: Insert an integer into the linked list:\n");
+	printf("2: Create the queue from the linked list:\n");
+	printf("3: Remove odd numbers from the queue:\n");
 	printf("0: Quit:\n");
 
 
 	while (c != 0)
 	{
-		printf("Please input your choice(1/2/0): ");
+		printf("Please input your choice(1/2/3/0): ");
 		scanf("%d", &c);
 
 		switch (c)
 		{
 		case 1:
-			printf("Enter expressions without spaces to check whether it is balanced or not: ");
-			scanf("%s", str);
+			printf("Input an integer that you want to insert into the List: ");
+			scanf("%d", &i);
+			insertNode(&ll, ll.size, i);
+			printf("The resulting linked list is: ");
+			printList(&ll);
 			break;
-        case 2:
-            if(balanced(str))
-                printf("not balanced!\n");
-            else
-                printf("balanced!\n");
+		case 2:
+			createQueueFromLinkedList(&ll, &q); // You need to code this function
+			printf("The resulting queue is: ");
+			printList(&(q.ll));
+			break;
+		case 3:
+			removeOddValues(&q); // You need to code this function
+			printf("The resulting queue after removing odd integers is: ");
+			printList(&(q.ll));
+			removeAllItemsFromQueue(&q);
+			removeAllItems(&ll);
 			break;
 		case 0:
+			removeAllItemsFromQueue(&q);
+			removeAllItems(&ll);
 			break;
 		default:
 			printf("Choice unknown;\n");
@@ -101,22 +111,83 @@ int main()
 	return 0;
 }
 
-////////////////////////////////////////////////////////////
-int balanced(char *expression)
+
+//////////////////////////////////////////////////////////////////////////////////
+
+void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
-/* add your code here */
+	removeAllItemsFromQueue(q);
+	ListNode *cur = ll->head;
+    while (cur != NULL) {
+        enqueue(q, cur->item);
+        cur = cur->next;
+    }
+
 }
 
-////////////////////////////////////////////////////////////
-
-void removeAllItemsFromStack(Stack *s)
+void removeOddValues(Queue *q)
 {
-	if (s == NULL)
-		return;
-	while (s->ll.head != NULL)
-	{
-		pop(s);
+	int size = q->ll.size;
+
+    // 큐 크기 반복
+    for (int i = 0; i < size; i++)
+    {
+        int item = dequeue(q);
+        if (item % 2 == 0) {
+            enqueue(q, item);
+        }
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+
+void enqueue(Queue *q, int item) {
+	insertNode(&(q->ll), q->ll.size, item);
+}
+
+int dequeue(Queue *q) {
+	int item;
+
+	if (!isEmptyQueue(q)) {
+		item = ((q->ll).head)->item;
+		removeNode(&(q->ll), 0);
+		return item;
 	}
+	return -1;
+}
+
+int isEmptyQueue(Queue *q) {
+	if ((q->ll).size == 0)
+		return 1;
+	return 0;
+}
+
+void removeAllItemsFromQueue(Queue *q)
+{
+	int count, i;
+	if (q == NULL)
+		return;
+	count = q->ll.size;
+
+	for (i = 0; i < count; i++)
+		dequeue(q);
+}
+
+
+void printList(LinkedList *ll){
+
+	ListNode *cur;
+	if (ll == NULL)
+		return;
+	cur = ll->head;
+	if (cur == NULL)
+		printf("Empty");
+	while (cur != NULL)
+	{
+		printf("%d ", cur->item);
+		cur = cur->next;
+	}
+	printf("\n");
 }
 
 
@@ -134,58 +205,6 @@ void removeAllItems(LinkedList *ll)
 	ll->size = 0;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
-
-void push(Stack *s, int item)
-{
-	insertNode(&(s->ll), 0, item);
-}
-
-int pop(Stack *s)
-{
-	int item;
-	if (s->ll.head != NULL)
-	{
-		item = ((s->ll).head)->item;
-		removeNode(&(s->ll), 0);
-		return item;
-	}
-	else
-		return MIN_INT;
-}
-
-int peek(Stack *s){
-    if(isEmptyStack(s))
-        return MIN_INT;
-    else
-        return ((s->ll).head)->item;
-}
-
-int isEmptyStack(Stack *s)
-{
-	if ((s->ll).size == 0)
-		return 1;
-	else
-		return 0;
-}
-
-
-void printList(LinkedList *ll){
-
-	ListNode *cur;
-	if (ll == NULL)
-		return;
-
-	cur = ll->head;
-	if (cur == NULL)
-		printf("Empty");
-	while (cur != NULL)
-	{
-		printf("%d ", cur->item);
-		cur = cur->next;
-	}
-	printf("\n");
-}
 
 ListNode * findNode(LinkedList *ll, int index){
 

@@ -2,7 +2,7 @@
 
 /* CE1007/CZ1007 Data Structures
 Lab Test: Section E - Binary Trees Questions
-Purpose: Implementing the required functions for Question 6 */
+Purpose: Implementing the required functions for Question 3 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -10,7 +10,6 @@ Purpose: Implementing the required functions for Question 6 */
 #include <stdlib.h>
 
 //////////////////////////////////////////////////////////////////////////////////
-
 typedef struct _btnode
 {
     int item;
@@ -31,11 +30,10 @@ typedef struct _stack
     StackNode *top;
 } Stack;
 
-
-///////////////////////// Function prototypes ////////////////////////////////////
+///////////////////////// function prototypes ////////////////////////////////////
 
 // You should not change the prototypes of these functions
-void printSmallerValues(BTNode *node, int m);
+int countOneChildNodes(BTNode *node);
 
 BTNode *createBTNode(int item);
 
@@ -51,7 +49,7 @@ void removeAll(BTNode **node);
 int main()
 {
     char e;
-    int c, value;
+    int c,s;
     BTNode *root;
 
     c = 1;
@@ -59,7 +57,7 @@ int main()
 
 
     printf("1: Create a binary tree.\n");
-    printf("2: Print smaller values.\n");
+    printf("2: Count the number of nodes that have exactly one child node.\n");
     printf("0: Quit;\n");
 
     while(c != 0)
@@ -77,11 +75,8 @@ int main()
                 printf("\n");
                 break;
             case 2:
-                printf("Enter an integer value to print smaller values: ");
-                scanf("%d",&value);
-                printf("The values smaller than %d are: ", value);
-                printSmallerValues(root,value);
-                printf("\n");
+                s = countOneChildNodes(root);
+                printf("The number of nodes that have exactly one child node is: %d.\n", s);
                 removeAll(&root);
                 break;
             case 0:
@@ -93,7 +88,7 @@ int main()
             }
         }
         else
-        {printf("\n");
+        {
             scanf("%c",&e);
         }
 
@@ -103,12 +98,29 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void printSmallerValues(BTNode *node, int m)
+int countOneChildNodes(BTNode *node)
+
 {
-	/* add your code here */
+    // 현재 노드가 NULL: 0 반환
+    if (node == NULL){
+        return 0;
+    }
+    int current_count = 0;
+    // 왼쪽, 오른쪽 중 하나의 자식만 존재
+    if ((node->left == NULL && node->right != NULL) || (node->left != NULL && node->right == NULL)) {
+        current_count = 1;
+    }
+
+    
+    // 3. 왼쪽과 오른쪽 서브트리에서 각각 재귀 호출
+    int left_count = countOneChildNodes(node->left);
+    int right_count = countOneChildNodes(node->right);
+
+    // 4. 현재 노드 및 서브트리들에서의 카운트를 합산하여 반환
+    return current_count + left_count + right_count;
 }
 
-//////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 BTNode *createBTNode(int item)
 {
