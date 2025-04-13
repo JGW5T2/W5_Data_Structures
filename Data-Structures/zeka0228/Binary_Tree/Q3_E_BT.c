@@ -98,7 +98,7 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-<<<<<<< HEAD
+
 int countOneChildNodes(BTNode *node){
     int count;
 
@@ -121,13 +121,7 @@ int countOneChildNodes(BTNode *node){
 
 }
 //checkcccc
-=======
-int countOneChildNodes(BTNode *node)
 
-{
-    /* add your code here */
-}
->>>>>>> 9bb02af4fab2601aef858ce32bbe7a00ca5df31c
 
 ///////////////////////////////////////////////////////////////////////////////////
 
