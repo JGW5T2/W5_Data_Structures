@@ -240,10 +240,5 @@ int removeNode(LinkedList *ll, int index){
 	}
 
 	return -1;
-<<<<<<< HEAD
-}
-=======
 
-	
 }
->>>>>>> 0e6d0d363d3a18710aa33b39e5dc7b9cb62552c3
