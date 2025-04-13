@@ -87,7 +87,31 @@ int main()
 
 void RecursiveReverse(ListNode **ptrHead)
 {
-	/* add your code here */
+	// - 매개변수 `ptrHead`는 리스트의 헤드 포인터 주소(`ListNode`)입니다.
+	// - 함수는 **재귀적으로 호출**되며,
+	// - 리스트의 방향을 바꾸어, 노드들을 **역순**으로 배치합니다.
+
+	// 첫 번째 노드 분리해서 first와 rest로 구분한다.
+	// 나머지 리스트를 재귀적으로 뒤집는다.
+	// 재귀 호출이 끝나면, first 노드를 뒤집힌 리스트의 마지막에 연결한다.
+	// first->next는 원래의 두 번째 노드였고, 이제 그 노드의 next가 first를 가리키게 된다.
+	// 연결이 완료되면 first의 next는 NULL로 설정
+	// 재귀적으로 뒤집힌 리스트의 새로운 헤드를 전체 리스트의 헤드로 갱신
+	
+	if (*ptrHead == NULL || (*ptrHead)->next == NULL)
+	return;
+
+	ListNode *first = *ptrHead;
+	ListNode *rest = first->next;
+
+	RecursiveReverse(&rest);
+
+	first->next->next = first;
+	first->next = NULL;
+
+	*ptrHead = rest;
+
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////

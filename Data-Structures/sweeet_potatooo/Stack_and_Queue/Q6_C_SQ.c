@@ -111,7 +111,12 @@ int main()
 
 void removeUntil(Stack *s, int value)
 {
-/* add your code here */
+	/*정수로 구성된 스택에서, 지정한 값이 처음으로 나타날 때까지 모든 값을 pop()하여 제거*/
+	//peek한 녀석과 value를 비교하여 같을 때 까지 팝한다
+
+	while(!isEmptyStack(s) && peek(s) != value){
+		pop(s);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////
