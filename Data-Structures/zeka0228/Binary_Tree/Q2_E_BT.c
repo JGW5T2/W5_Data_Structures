@@ -97,20 +97,9 @@ int main()
 int maxHeight(BTNode *node)
 
 {
-    int count, L, R;
-    if (node == NULL) 
-        return -1;
-    L = maxHeight(node->left);
-    R = maxHeight(node->right);
-
-    if(L > R)
-        count = L + 1;
-    else
-        count = R + 1;
-    return count;
+    /* add your code here */
 }
 
-//check
 ///////////////////////////////////////////////////////////////////////////////////
 
 BTNode *createBTNode(int item){
