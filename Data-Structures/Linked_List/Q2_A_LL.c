@@ -2,7 +2,7 @@
 
 /* CE1007/CZ1007 Data Structures
 Lab Test: Section A - Linked List Questions
-Purpose: Implementing the required functions for Question 1 */
+Purpose: Implementing the required functions for Question 2 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -11,21 +11,23 @@ Purpose: Implementing the required functions for Question 1 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
-typedef struct _listnode{
+typedef struct _listnode
+{
 	int item;
 	struct _listnode *next;
 } ListNode;			// You should not change the definition of ListNode
 
-typedef struct _linkedlist{
+typedef struct _linkedlist
+{
 	int size;
 	ListNode *head;
 } LinkedList;			// You should not change the definition of LinkedList
 
 
-///////////////////////// function prototypes ////////////////////////////////////
+//////////////////////// function prototypes /////////////////////////////////////
 
-//You should not change the prototype of this function
-int insertSortedLL(LinkedList *ll, int item);
+// You should not change the prototype of this function
+void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2);
 
 void printList(LinkedList *ll);
 void removeAllItems(LinkedList *ll);
@@ -38,83 +40,93 @@ int removeNode(LinkedList *ll, int index);
 
 int main()
 {
-	LinkedList ll;
+	LinkedList ll1, ll2;
 	int c, i, j;
 	c = 1;
-
 	//Initialize the linked list 1 as an empty linked list
-	ll.head = NULL;
-	ll.size = 0;
+	ll1.head = NULL;
+	ll1.size = 0;
 
-	printf("1: Insert an integer to the sorted linked list:\n");
-	printf("2: Print the index of the most recent input value:\n");
-	printf("3: Print sorted linked list:\n");
-	printf("0: Quit:");
+	//Initialize the linked list 2 as an empty linked list
+	ll2.head = NULL;
+	ll2.size = 0;
+
+	printf("1: Insert an integer to the linked list 1:\n");
+	printf("2: Insert an integer to the linked list 2:\n");
+	printf("3: Create the alternate merged linked list:\n");
+	printf("0: Quit:\n");
 
 	while (c != 0)
 	{
-		printf("\nPlease input your choice(1/2/3/0): ");
+		printf("Please input your choice(1/2/3/0): ");
 		scanf("%d", &c);
 
 		switch (c)
 		{
 		case 1:
-			printf("Input an integer that you want to add to the linked list: ");
+			printf("Input an integer that you want to add to the linked list 1: ");
 			scanf("%d", &i);
-			j = insertSortedLL(&ll, i);
-			printf("The resulting linked list is: ");
-			printList(&ll);
+			j = insertNode(&ll1, ll1.size, i);
+			printf("Linked list 1: ");
+			printList(&ll1);
 			break;
 		case 2:
-			printf("The value %d was added at index %d\n", i, j);
+			printf("Input an integer that you want to add to the linked list 2: ");
+			scanf("%d", &i);
+			j = insertNode(&ll2, ll2.size, i);
+			printf("Linked list 2: ");
+			printList(&ll2);
 			break;
 		case 3:
-			printf("The resulting sorted linked list is: ");
-			printList(&ll);
-			removeAllItems(&ll);
+		    printf("The resulting linked lists after merging the given linked list are:\n");
+			alternateMergeLinkedList(&ll1, &ll2); // You need to code this function
+			printf("The resulting linked list 1: ");
+			printList(&ll1);
+			printf("The resulting linked list 2: ");
+			printList(&ll2);
+			removeAllItems(&ll1);
+			removeAllItems(&ll2);
 			break;
 		case 0:
-			removeAllItems(&ll);
+			removeAllItems(&ll1);
+			removeAllItems(&ll2);
 			break;
 		default:
 			printf("Choice unknown;\n");
 			break;
 		}
-
-
 	}
 	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int insertSortedLL(LinkedList *ll, int item)
+void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-	ListNode *newnode = malloc(sizeof(ListNode));
-	if (newnode == NULL){
-		return(-1);
-	}
-	newnode ->item = item;
-	newnode ->next = NULL;
-	                       
-	int index = 0;
+    if (ll1 == NULL || ll2 == NULL)
+			return;
+		ListNode *curr1 = ll1->head;
+		ListNode *curr2 = ll2->head;
+		ListNode *next1, *next2;
 
-	if (ll->head == NULL || item <= ll -> head -> item){
-		newnode-> next = ll->head;
-		ll->head = newnode;
-		ll->size++;
-		return index;
-	}
+		int insertedCount =0;
 
-	ListNode *prev = ll->head;
-	ListNode *curr = ll->head->next;
-	index =1;
+		while (curr1 != NULL && curr2 != NULL){
+			next1 = curr1->next;
+			next2 = curr2->next;
 
-	while(curr != NULL && curr -> item< item){
-		prev =curr;
-		curr = curr->next;
-		index++;
-	}
+			curr1->next = curr2;
+			curr2->next = next1;
+		
+			insertedCount++;
+		
+			curr1 = next1;
+			curr2 = next2;
+}
+		ll1->size += insertedCount;
+    ll2->size -= insertedCount;
+
+		ll2->head = curr2;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -240,6 +252,4 @@ int removeNode(LinkedList *ll, int index){
 	}
 
 	return -1;
-
-	
 }

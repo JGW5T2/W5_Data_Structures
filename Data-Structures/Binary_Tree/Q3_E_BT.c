@@ -98,36 +98,27 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-<<<<<<< HEAD
-int countOneChildNodes(BTNode *node){
-    int count;
-
-    if(node == NULL) return 0;
-
-    if(node->left == NULL){
-        if(node->right == NULL) return 0;
-
-        count = countOneChildNodes(node->right) +1 ;
-        return count;
-    }
-
-    if(node->right == NULL){
-        count = countOneChildNodes(node->left) +1;
-        return count;
-    }
-
-    count = countOneChildNodes(node->right) + countOneChildNodes(node->left);
-    return count;
-
-}
-//checkcccc
-=======
 int countOneChildNodes(BTNode *node)
 
 {
-    /* add your code here */
+    // 현재 노드가 NULL: 0 반환
+    if (node == NULL){
+        return 0;
+    }
+    int current_count = 0;
+    // 왼쪽, 오른쪽 중 하나의 자식만 존재
+    if ((node->left == NULL && node->right != NULL) || (node->left != NULL && node->right == NULL)) {
+        current_count = 1;
+    }
+
+    
+    // 3. 왼쪽과 오른쪽 서브트리에서 각각 재귀 호출
+    int left_count = countOneChildNodes(node->left);
+    int right_count = countOneChildNodes(node->right);
+
+    // 4. 현재 노드 및 서브트리들에서의 카운트를 합산하여 반환
+    return current_count + left_count + right_count;
 }
->>>>>>> 9bb02af4fab2601aef858ce32bbe7a00ca5df31c
 
 ///////////////////////////////////////////////////////////////////////////////////
 

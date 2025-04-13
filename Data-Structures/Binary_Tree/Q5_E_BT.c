@@ -2,7 +2,7 @@
 
 /* CE1007/CZ1007 Data Structures
 Lab Test: Section E - Binary Trees Questions
-Purpose: Implementing the required functions for Question 3 */
+Purpose: Implementing the required functions for Question 5 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -10,6 +10,7 @@ Purpose: Implementing the required functions for Question 3 */
 #include <stdlib.h>
 
 //////////////////////////////////////////////////////////////////////////////////
+
 typedef struct _btnode
 {
     int item;
@@ -30,10 +31,11 @@ typedef struct _stack
     StackNode *top;
 } Stack;
 
-///////////////////////// function prototypes ////////////////////////////////////
+
+///////////////////////// Function prototypes ////////////////////////////////////
 
 // You should not change the prototypes of these functions
-int countOneChildNodes(BTNode *node);
+void mirrorTree(BTNode *node);
 
 BTNode *createBTNode(int item);
 
@@ -49,7 +51,7 @@ void removeAll(BTNode **node);
 int main()
 {
     char e;
-    int c,s;
+    int c;
     BTNode *root;
 
     c = 1;
@@ -57,8 +59,9 @@ int main()
 
 
     printf("1: Create a binary tree.\n");
-    printf("2: Count the number of nodes that have exactly one child node.\n");
+    printf("2: Mirror the binary tree.\n");
     printf("0: Quit;\n");
+
 
     while(c != 0)
     {
@@ -75,8 +78,10 @@ int main()
                 printf("\n");
                 break;
             case 2:
-                s = countOneChildNodes(root);
-                printf("The number of nodes that have exactly one child node is: %d.\n", s);
+                mirrorTree(root);
+                printf("Mirror binary tree is: ");
+                printTree(root);
+                printf("\n");
                 removeAll(&root);
                 break;
             case 0:
@@ -98,38 +103,12 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-<<<<<<< HEAD
-int countOneChildNodes(BTNode *node){
-    int count;
-
-    if(node == NULL) return 0;
-
-    if(node->left == NULL){
-        if(node->right == NULL) return 0;
-
-        count = countOneChildNodes(node->right) +1 ;
-        return count;
-    }
-
-    if(node->right == NULL){
-        count = countOneChildNodes(node->left) +1;
-        return count;
-    }
-
-    count = countOneChildNodes(node->right) + countOneChildNodes(node->left);
-    return count;
-
-}
-//checkcccc
-=======
-int countOneChildNodes(BTNode *node)
-
+void mirrorTree(BTNode *node)
 {
-    /* add your code here */
+	/* add your code here */
 }
->>>>>>> 9bb02af4fab2601aef858ce32bbe7a00ca5df31c
 
-///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
 BTNode *createBTNode(int item)
 {

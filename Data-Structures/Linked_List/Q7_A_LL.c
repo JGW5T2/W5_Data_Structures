@@ -2,7 +2,7 @@
 
 /* CE1007/CZ1007 Data Structures
 Lab Test: Section A - Linked List Questions
-Purpose: Implementing the required functions for Question 1 */
+Purpose: Implementing the required functions for Question 7 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -11,25 +11,27 @@ Purpose: Implementing the required functions for Question 1 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
-typedef struct _listnode{
+typedef struct _listnode
+{
 	int item;
 	struct _listnode *next;
 } ListNode;			// You should not change the definition of ListNode
 
-typedef struct _linkedlist{
+typedef struct _linkedlist
+{
 	int size;
 	ListNode *head;
 } LinkedList;			// You should not change the definition of LinkedList
 
 
-///////////////////////// function prototypes ////////////////////////////////////
+//////////////////////// function prototypes /////////////////////////////////////
 
-//You should not change the prototype of this function
-int insertSortedLL(LinkedList *ll, int item);
+// You should not change the prototype of this function
+void RecursiveReverse(ListNode **ptrHead);
 
 void printList(LinkedList *ll);
 void removeAllItems(LinkedList *ll);
-ListNode *findNode(LinkedList *ll, int index);
+ListNode * findNode(LinkedList *ll, int index);
 int insertNode(LinkedList *ll, int index, int value);
 int removeNode(LinkedList *ll, int index);
 
@@ -41,19 +43,18 @@ int main()
 	LinkedList ll;
 	int c, i, j;
 	c = 1;
-
 	//Initialize the linked list 1 as an empty linked list
 	ll.head = NULL;
 	ll.size = 0;
 
-	printf("1: Insert an integer to the sorted linked list:\n");
-	printf("2: Print the index of the most recent input value:\n");
-	printf("3: Print sorted linked list:\n");
-	printf("0: Quit:");
+
+	printf("1: Insert an integer to the linked list:\n");
+	printf("2: Reversed the linked list:\n");
+	printf("0: Quit:\n");
 
 	while (c != 0)
 	{
-		printf("\nPlease input your choice(1/2/3/0): ");
+		printf("Please input your choice(1/2/0): ");
 		scanf("%d", &c);
 
 		switch (c)
@@ -61,15 +62,13 @@ int main()
 		case 1:
 			printf("Input an integer that you want to add to the linked list: ");
 			scanf("%d", &i);
-			j = insertSortedLL(&ll, i);
+			j = insertNode(&ll, ll.size, i);
 			printf("The resulting linked list is: ");
 			printList(&ll);
 			break;
 		case 2:
-			printf("The value %d was added at index %d\n", i, j);
-			break;
-		case 3:
-			printf("The resulting sorted linked list is: ");
+			RecursiveReverse(&(ll.head)); // You need to code this function
+			printf("The resulting linked list after reversed the given linked list is: ");
 			printList(&ll);
 			removeAllItems(&ll);
 			break;
@@ -80,44 +79,18 @@ int main()
 			printf("Choice unknown;\n");
 			break;
 		}
-
-
 	}
 	return 0;
 }
 
-//////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
-int insertSortedLL(LinkedList *ll, int item)
+void RecursiveReverse(ListNode **ptrHead)
 {
-	ListNode *newnode = malloc(sizeof(ListNode));
-	if (newnode == NULL){
-		return(-1);
-	}
-	newnode ->item = item;
-	newnode ->next = NULL;
-	                       
-	int index = 0;
-
-	if (ll->head == NULL || item <= ll -> head -> item){
-		newnode-> next = ll->head;
-		ll->head = newnode;
-		ll->size++;
-		return index;
-	}
-
-	ListNode *prev = ll->head;
-	ListNode *curr = ll->head->next;
-	index =1;
-
-	while(curr != NULL && curr -> item< item){
-		prev =curr;
-		curr = curr->next;
-		index++;
-	}
+	/* add your code here */
 }
 
-///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
 void printList(LinkedList *ll){
 
@@ -136,23 +109,7 @@ void printList(LinkedList *ll){
 	printf("\n");
 }
 
-
-void removeAllItems(LinkedList *ll)
-{
-	ListNode *cur = ll->head;
-	ListNode *tmp;
-
-	while (cur != NULL){
-		tmp = cur->next;
-		free(cur);
-		cur = tmp;
-	}
-	ll->head = NULL;
-	ll->size = 0;
-}
-
-
-ListNode *findNode(LinkedList *ll, int index){
+ListNode * findNode(LinkedList *ll, int index){
 
 	ListNode *temp;
 
@@ -240,6 +197,18 @@ int removeNode(LinkedList *ll, int index){
 	}
 
 	return -1;
+}
 
-	
+void removeAllItems(LinkedList *ll)
+{
+	ListNode *cur = ll->head;
+	ListNode *tmp;
+
+	while (cur != NULL){
+		tmp = cur->next;
+		free(cur);
+		cur = tmp;
+	}
+	ll->head = NULL;
+	ll->size = 0;
 }
