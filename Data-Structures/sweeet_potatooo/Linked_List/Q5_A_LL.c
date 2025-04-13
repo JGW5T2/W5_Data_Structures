@@ -102,7 +102,39 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+// 	이 함수는 단일 연결 리스트(singly linked list)를 **두 개의 서브리스트로 분할**합니다:
+// 하나는 **앞쪽 절반(front list)**, 다른 하나는 뒤쪽 절반(back list)입니다.
+// - **리스트에 포함된 요소 수가 홀수인 경우**, 여분의 하나는 앞쪽 리스트(frontList)에 포함시켜야 합니다.
+// - 함수는 결과로 나온 **frontList**와 **backList**를 출력(print)해야 합니다.
+
+//빈 리스트면 두 결과 리스트 모두 빈 리스트 
+	if (ll == NULL || ll->head == NULL) {
+		resultFrontList->head = NULL;
+		resultFrontList->size = 0;
+		resultBackList->head = NULL;
+		resultBackList->size = 0;
+		return;
+	}
+
+
+	//헤드에서 시작
+	ListNode *slow = ll->head;
+	ListNode *fast = ll->head;
+
+	while(fast->next != NULL && fast->next != NULL){
+		slow = slow->next;
+		fast = fast->next->next;
+	}
+	// slowsms 1칸, fast는 두칸씩 이동
+
+		resultFrontList->head = ll->head;
+    resultFrontList->size = (ll->size + 1) / 2;
+
+    resultBackList->head = slow->next;
+    resultBackList->size = ll->size - resultFrontList->size;
+
+    slow->next = NULL;
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

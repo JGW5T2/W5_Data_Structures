@@ -88,7 +88,39 @@ int main()
 
 int moveMaxToFront(ListNode **ptrHead)
 {
-    /* add your code here */
+	// - 매개변수 `ptrHead`는 **리스트 헤드 포인터의 주소**를 받습니다 (`ListNode`).
+	// - 리스트 전체를 최대 **한 번만 순회**해야 합니다.
+	// - 가장 큰 값을 가진 노드를 찾아, 그것을 리스트의 맨 앞(head)으로 옮깁니다.
+	// - 함수는 작업이 성공하면 `1`, 실패하거나 노드가 하나뿐이라 이동할 필요가 없을 경우 `0`을 반환할 수 있습니다.
+
+	if(ptrHead ==NULL || *ptrHead ==NULL || (*ptrHead)->next == NULL){
+		return 0;
+	}
+
+	ListNode *max_node = *ptrHead;
+	ListNode *max_prev = NULL;
+	ListNode *prev = *ptrHead;
+	ListNode *cur = (*ptrHead)->next;
+
+	while(cur != NULL) {
+		if(cur->item > max_node->item) {
+				max_node = cur;
+				max_prev = prev;
+		}
+		prev = cur;
+		cur = cur->next;
+	}
+
+	if (max_node == *ptrHead){
+		return 0;
+	}
+
+	max_prev->next = max_node->next;
+	max_node->next = *ptrHead;
+	*ptrHead = max_node;
+
+	return 1;
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////
