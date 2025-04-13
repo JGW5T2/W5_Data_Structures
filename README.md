@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 0e6d0d363d3a18710aa33b39e5dc7b9cb62552c3
 # 📘 Docker + VSCode DevContainer 기반 C 개발 환경 구축 가이드
 
 이 문서는 **Windows**와 **macOS** 사용자가 Docker와 VSCode DevContainer 기능을 활용하여 C 개발 및 디버깅 환경을 빠르게 구축할 수 있도록 도와줍니다.
@@ -144,3 +149,7 @@ git push -u origin main
 - 어떤 운영체제에서든 동일한 환경으로 개발 가능  
 - VSCode 내에서 코드 작성, 컴파일, 디버깅까지 한 번에 가능
 ---
+<<<<<<< HEAD
+>>>>>>> 81c26a8 (Update README.md)
+=======
+>>>>>>> 0e6d0d363d3a18710aa33b39e5dc7b9cb62552c3
