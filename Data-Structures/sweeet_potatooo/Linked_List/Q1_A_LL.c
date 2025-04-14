@@ -90,31 +90,40 @@ int main()
 
 int insertSortedLL(LinkedList *ll, int item)
 {
-	ListNode *newnode = malloc(sizeof(ListNode));
-	if (newnode == NULL){
-		return(-1);
-	}
-	newnode ->item = item;
-	newnode ->next = NULL;
-	                       
-	int index = 0;
+    ListNode *newnode = malloc(sizeof(ListNode));
+    if (newnode == NULL) {
+        return -1;
+    }
+    newnode->item = item;
+    newnode->next = NULL;
+                           
+    int index = 0;
 
-	if (ll->head == NULL || item <= ll -> head -> item){
-		newnode-> next = ll->head;
-		ll->head = newnode;
-		ll->size++;
-		return index;
-	}
+    // 리스트가 비어있거나, item이 첫 노드의 item보다 작거나 같으면
+    if (ll->head == NULL || item <= ll->head->item) {
+        newnode->next = ll->head;
+        ll->head = newnode;
+        ll->size++;
+        return index;
+    }
 
-	ListNode *prev = ll->head;
-	ListNode *curr = ll->head->next;
-	index =1;
+    ListNode *prev = ll->head;
+    ListNode *curr = ll->head->next;
+    index = 1;
 
-	while(curr != NULL && curr -> item< item){
-		prev =curr;
-		curr = curr->next;
-		index++;
-	}
+    // 정렬된 순서대로 탐색하여 새 노드를 삽입할 위치 찾기
+    while (curr != NULL && curr->item < item) {
+        prev = curr;
+        curr = curr->next;
+        index++;
+    }
+
+    // prev 다음에 newnode를 삽입하고, newnode의 다음 노드를 curr로 지정
+    newnode->next = curr;
+    prev->next = newnode;
+    ll->size++;
+
+    return index;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

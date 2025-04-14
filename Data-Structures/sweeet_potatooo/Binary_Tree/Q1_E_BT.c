@@ -121,7 +121,13 @@ int identical(BTNode *tree1, BTNode *tree2)
     // 두 이진 트리가 구조적으로 동일하다는 것은 **두 트리가 모두 비어 있거나**, 혹은 **두 트리가 모두 비어 있지 않으면서, 
     // 동일한 값의 노드들로 구성되어 있고 그 구조(노드 배치)가 동일한 경우**를 말합니다.
 
-    
+    if(tree1 == NULL && tree2 == NULL){
+        return 1;
+    }
+    if (tree1 == NULL || tree2 == NULL){
+        return 0;
+    }
+    return (tree1->item == tree2->item) && identical(tree1->left, tree2->left) && identical(tree1->right, tree2->right);
 }
 
 /////////////////////////////////////////////////////////////////////////////////

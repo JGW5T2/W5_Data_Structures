@@ -80,6 +80,7 @@ int main()
                 printf("\nThe values stored in all nodes of the tree that has at least one great-grandchild are: ");
                 hasGreatGrandchild(root);
                 removeAll(&root);
+                printf("\n");
                 break;
             case 0:
                 removeAll(&root);
@@ -102,7 +103,23 @@ int main()
 
 int hasGreatGrandchild(BTNode *node)
 {
-	/* add your code here */
+    // 이진 트리에서 하나 이상의 증손자(great-grandchild)를 가진 모든 노드의 값을 출력하는 
+    // 재귀적인 C 함수 `hasGreatGrandchild()`을 작성하세요.
+    // 이 함수는 이진 트리의 루트 노드를 가리키는 **포인터 하나만** 매개변수로 받습니다.
+
+    if (node == NULL){
+        return -1;    
+    }
+
+    int leftHeight = hasGreatGrandchild(node->left);
+    int rightHeight = hasGreatGrandchild(node->right);
+
+    int currentHeight = (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+    
+    if(currentHeight >= 3){
+        printf("%d ", node->item);
+    }
+    return currentHeight;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -135,6 +152,7 @@ BTNode *createTree()
         root = createBTNode(item);
         push(&stack,root);
     }
+
     else
     {
         scanf("%c",&s);
