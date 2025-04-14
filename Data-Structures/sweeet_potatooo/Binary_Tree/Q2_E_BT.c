@@ -97,7 +97,17 @@ int main()
 int maxHeight(BTNode *node)
 
 {
-    /* add your code here */
+    // 이진 트리의 루트 노드를 가리키는 포인터를 매개변수로 받아, 루트 노드부터 가장 먼 리프 노드까지의 
+    // **가장 긴 경로에 존재하는 링크(간선)의 수**를 반환하는 C 함수 `maxHeight()`를 작성하세요.
+    // - 노드의 높이(height)는 그 노드에서 **가장 깊은 리프 노드까지 연결된 링크의 수**를 의미합니다.
+    if (node == NULL){
+        return -1;
+    }
+    int leftHeight = maxHeight(node->left);
+    int rightHeight = maxHeight(node->right);
+
+    return(leftHeight>rightHeight ? leftHeight : rightHeight ) +1;
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

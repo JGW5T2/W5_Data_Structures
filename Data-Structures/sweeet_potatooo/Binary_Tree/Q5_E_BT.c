@@ -105,7 +105,22 @@ int main()
 
 void mirrorTree(BTNode *node)
 {
-	/* add your code here */
+	// 이 함수는 이진 트리를 좌우로 뒤집어(반전시켜) 원래 트리의 거울 이미지(mirror image)가 되도록 수정합니다.
+    // 중간에 새로운 트리나 임시 트리를 생성하지 않고, 원래 트리의 구조를 직접 수정해야 합니다.
+    // 이 함수는 하나의 매개변수를 받습니다:
+    // 거울 이미지로 만들 이진 트리의 루트 노드를 가리키는 포인터입니다.
+
+    if (node == NULL)
+        return;
+
+    // postorder
+    mirrorTree(node->left);
+    mirrorTree(node->right);
+
+    // 현재 노드의 왼쪽과 오른쪽 자식을 교환
+    BTNode *temp = node->left;
+    node->left = node->right;
+    node->right = temp;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

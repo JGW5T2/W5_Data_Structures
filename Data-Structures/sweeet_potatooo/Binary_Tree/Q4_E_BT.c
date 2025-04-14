@@ -103,7 +103,22 @@ int main()
 int sumOfOddNodes(BTNode *node)
 
 {
-    /* add your code here */
+    // 이진 트리의 루트 노드를 가리키는 포인터를 매개변수로 받아,
+    // **트리 내의 홀수 값(odd numbers)의 합**을 반환하는 재귀적인 C 함수 `sumOfOddNodes()`를 작성하세요.
+    // 이진 트리는 정수 값을 갖는 노드들로 구성되어 있습니다.
+
+    if (node == NULL){
+        return 0;
+    }
+    int sum =0;
+
+    if (node->item %2 !=0){
+        sum+= node->item;
+    }
+    sum +=sumOfOddNodes(node->left);
+    sum +=sumOfOddNodes(node->right);
+
+    return sum;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

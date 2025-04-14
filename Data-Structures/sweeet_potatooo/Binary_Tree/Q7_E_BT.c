@@ -102,7 +102,26 @@ int main()
 
 int smallestValue(BTNode *node)
 {
-	/* add your code here */
+	// C 함수 `smallestValue()`를 작성하세요.
+    // 이 함수는 주어진 트리의 루트 노드를 가리키는 포인터를 매개변수로 받아,
+    // **트리에 저장된 값 중 가장 작은 값을 반환**합니다.
+    if (node == NULL){
+        return __INT_MAX__;
+    }
+    int current = node->item;
+    int leftmin = smallestValue(node->left);
+    int rightmin = smallestValue(node->right);
+
+    int min = current;
+    if(leftmin<min){
+        min = leftmin;
+    }
+
+    if(rightmin<min){
+        min = rightmin;
+    }
+    
+    return min;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
