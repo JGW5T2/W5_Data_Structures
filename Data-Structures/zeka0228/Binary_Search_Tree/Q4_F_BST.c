@@ -89,9 +89,30 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void postOrderIterativeS1(BSTNode *root)
-{
-	 /* add your code here */
+void postOrderIterativeS1(BSTNode *root){
+	Stack *s;
+	s = malloc(sizeof(Stack));
+	BSTNode *checker = root;
+	int save;
+	while (checker != NULL || !isEmpty(s)){
+
+		while (checker != NULL){
+			push(s,checker);
+			checker = checker->left;
+		}
+
+		checker = s->top->data->right;
+		if(checker == NULL || checker->item == save){
+			save = pop(s)->item;
+			printf("%d ", save);
+			checker = NULL;
+		}
+
+	}
+	
+
+	free(s);
+	return;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
