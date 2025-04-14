@@ -1,39 +1,32 @@
-
-//////////////////////////////////////////////////////////////////////////////////
-
-/* CE1007/CZ1007 Data Structures
-Lab Test: Section F - Binary Search Trees Questions
-Purpose: Implementing the required functions for Question 1 */
-
-//////////////////////////////////////////////////////////////////////////////////
-
 #include <stdio.h>
 #include <stdlib.h>
 
 #define BUFFER_SIZE 1024
-///////////////////////////////////////////////////////////////////////////////////
 
-typedef struct _bstnode{
+
+typedef struct  _bstnode
+{
 	int item;
-	struct _bstnode *left;
-	struct _bstnode *right;
-} BSTNode;   // You should not change the definition of BSTNode
+	struct  _bstnode *left;
+	struct  _bstnode *right;
+}BSTNode;
 
-typedef struct _QueueNode {
-	BSTNode *data;
+typedef struct _QueueNode
+{
+	BSTNode *node;
 	struct _QueueNode *nextPtr;
-}QueueNode; // You should not change the definition of QueueNode
+	
+}QueueNode;
 
 
 typedef struct _queue
 {
 	QueueNode *head;
 	QueueNode *tail;
-}Queue; // You should not change the definition of queue
+}Queue;
 
-///////////////////////////////////////////////////////////////////////////////////
 
-// You should not change the prototypes of these functions
+
 void levelOrderTraversal(BSTNode *node);
 
 void insertBSTNode(BSTNode **node, int value);
@@ -43,7 +36,6 @@ void enqueue(QueueNode **head, QueueNode **tail, BSTNode *node);
 int isEmpty(QueueNode *head);
 void removeAll(BSTNode **node);
 
-///////////////////////////// main() /////////////////////////////////////////////
 
 int main()
 {
@@ -89,84 +81,89 @@ int main()
 	return 0;
 }
 
-//////////////////////////////////////////////////////////////////////////////////
 
 void levelOrderTraversal(BSTNode* root)
 {
+	if (root == NULL)
+        return;
+		
+	BSTNode *V = root;
+    QueueNode *head = NULL, *tail = NULL;
+	enqueue(&head,&tail, V);
+	while (!isEmpty(head))
+	{
+		V = dequeue(&head,&tail);
+		printf("%d", V->item);
+		if(V->left != NULL){
+			enqueue(&head,&tail,V->left);
+		}
+		if(V->right!=NULL){
+			enqueue(&head,&tail,V->right);
+		}
+			
+	}
 
-    /* add your code here */
+	return;
+	
 }
 
-///////////////////////////////////////////////////////////////////////////////
 
 void insertBSTNode(BSTNode **node, int value){
-	if (*node == NULL)
-	{
+
+	if((*node) == NULL){
 		*node = malloc(sizeof(BSTNode));
 
-		if (*node != NULL) {
+		if(*node != NULL){
 			(*node)->item = value;
 			(*node)->left = NULL;
 			(*node)->right = NULL;
 		}
+
 	}
-	else
-	{
-		if (value < (*node)->item)
-		{
-			insertBSTNode(&((*node)->left), value);
-		}
-		else if (value >(*node)->item)
-		{
-			insertBSTNode(&((*node)->right), value);
-		}
-		else
-			return;
+	else{
+		if((*node)->item > value)
+			insertBSTNode(&((*node)->left),value);
+
+		else if((*node)->item < value)
+			insertBSTNode(&((*node)->right),value);
+
+		return;
+
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////////////
 
-// enqueue node
-void enqueue(QueueNode **headPtr, QueueNode **tailPtr, BSTNode *node)
-{
-	// dynamically allocate memory
+void enqueue(QueueNode **headPtr, QueueNode **tailPtr, BSTNode *node){
+
 	QueueNode *newPtr = malloc(sizeof(QueueNode));
 
-	// if newPtr does not equal NULL
-	if (newPtr != NULL) {
-		newPtr->data = node;
+	if(newPtr != NULL){
+		newPtr->node = node;
 		newPtr->nextPtr = NULL;
 
-		// if queue is empty, insert at head
-		if (isEmpty(*headPtr)) {
+		if(isEmpty(*headPtr))
 			*headPtr = newPtr;
-		}
-		else { // insert at tail
+		else
 			(*tailPtr)->nextPtr = newPtr;
-		}
 
-		*tailPtr = newPtr;
+		*tailPtr = newPtr; //중요
 	}
-	else {
-		printf("Node not inserted");
-	}
+	return;
 }
 
-BSTNode* dequeue(QueueNode **headPtr, QueueNode **tailPtr)
-{
-	BSTNode *node = (*headPtr)->data;
-	QueueNode *tempPtr = *headPtr;
-	*headPtr = (*headPtr)->nextPtr;
 
-	if (*headPtr == NULL) {
+BSTNode *dequeue(QueueNode **headPtr, QueueNode **tailPtr){
+	BSTNode *temp = (*headPtr)->node;
+	QueueNode *checker = *headPtr;
+	*headPtr = checker->nextPtr;
+	
+	if (*headPtr == NULL)
 		*tailPtr = NULL;
-	}
+	free(checker);
 
-	free(tempPtr);
-
-	return node;
+	return temp;
 }
+
 
 int isEmpty(QueueNode *head)
 {
