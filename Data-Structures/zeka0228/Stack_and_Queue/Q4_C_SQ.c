@@ -127,7 +127,6 @@ void reverse(Queue *q)
 
 	free(s);
 	return;
-	
 
 }
 

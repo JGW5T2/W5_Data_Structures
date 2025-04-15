@@ -71,7 +71,6 @@ int main()
 	printf("2: Check whether expressions comprised of the characters ()[]{} is balanced:\n");
 	printf("0: Quit:\n");
 
-
 	while (c != 0)
 	{
 		printf("Please input your choice(1/2/0): ");
@@ -85,9 +84,9 @@ int main()
 			break;
         case 2:
             if(balanced(str))
-                printf("not balanced!\n");
+				printf("balanced!\n");
             else
-                printf("balanced!\n");
+                printf("not balanced!\n");
 			break;
 		case 0:
 			break;
@@ -106,6 +105,8 @@ int balanced(char *expression)
 {
 	Stack *s;
 	s = malloc(sizeof(Stack));
+	s->ll.head = NULL;
+    s->ll.size = 0;
 	char checker;
 	
 	while (expression[0] != '\0') //문자열 끝이 \0인지 확인인
@@ -114,20 +115,30 @@ int balanced(char *expression)
 		if (checker == '(' || checker == '{' || checker == '[')
 			push(s,checker);
 		
-		else if (checker == ')' && pop(s) != 40)
-			return 0;
+		else if (checker == ')' && pop(s) != 40){
+			removeAllItemsFromStack(s);
+			free(s);
+			return 0;}
 		
-		else if (checker == '}' && pop(s) != 123)
-			return 0;
+		else if (checker == '}' && pop(s) != 123){
+			removeAllItemsFromStack(s);
+			free(s);
+			return 0;}
 		
-		else if (checker == ']' && pop(s) != 91)
-			return 0;
+		else if (checker == ']' && pop(s) != 91){
+			removeAllItemsFromStack(s);
+			free(s);
+			return 0;}
 		
 		
 		expression += 1;  //중요!! 포인터니까 주소값만 올려주면 그게 슬라이싱임
 	}
-	if (!isEmptyStack(s))
-		return 0;
+	if (!isEmptyStack(s)){
+		removeAllItemsFromStack(s);
+		free(s);
+		return 0;}
+	
+	removeAllItemsFromStack(s);
 	free(s);
 	return 1;	
 }
