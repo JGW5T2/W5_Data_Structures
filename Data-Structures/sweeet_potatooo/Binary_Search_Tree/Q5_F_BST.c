@@ -135,10 +135,58 @@ void postOrderIterativeS2(BSTNode *root)
 
 /* Given a binary search tree and a key, this function
    deletes the key and returns the new root. Make recursive function. */
-BSTNode* removeNodeFromTree(BSTNode *root, int value)
-{
-	/* add your code here */
-}
+	 BSTNode* removeNodeFromTree(BSTNode *root, int value)
+	 {
+
+		
+			 // 1. 트리가 비어 있는 경우
+			 if (root == NULL) {
+					 return NULL;
+			 }
+	 
+			 // 2. 삭제할 값이 현재 노드보다 작으면 왼쪽에서 찾음
+			 if (value < root->item) {
+					 root->left = removeNodeFromTree(root->left, value);
+			 }
+			 // 3. 삭제할 값이 현재 노드보다 크면 오른쪽에서 찾음
+			 else if (value > root->item) {
+					 root->right = removeNodeFromTree(root->right, value);
+			 }
+			 // 4. 삭제할 값을 찾은 경우
+			 else {
+					 // 4-1. 자식이 없는 경우 (리프 노드)
+					 if (root->left == NULL && root->right == NULL) {
+							 free(root);
+							 return NULL;
+					 }
+					 // 4-2. 오른쪽 자식만 있는 경우
+					 else if (root->left == NULL) {
+							 BSTNode *temp = root->right;
+							 free(root);
+							 return temp;
+					 }
+					 // 4-3. 왼쪽 자식만 있는 경우
+					 else if (root->right == NULL) {
+							 BSTNode *temp = root->left;
+							 free(root);
+							 return temp;
+					 }
+					 // 4-4. 자식이 둘 다 있는 경우
+					 else {
+							 // 오른쪽 서브트리에서 가장 작은 값을 찾음 (inorder successor)
+							 BSTNode *temp = root->right;
+							 while (temp->left != NULL) {
+									 temp = temp->left;
+							 }
+							 // 그 값을 현재 노드에 복사하고,
+							 root->item = temp->item;
+							 // 오른쪽 서브트리에서 해당 값을 한 번 더 삭제함
+							 root->right = removeNodeFromTree(root->right, temp->item);
+					 }
+			 }
+	 
+			 return root;
+	 }
 ///////////////////////////////////////////////////////////////////////////////
 
 void insertBSTNode(BSTNode **node, int value){
