@@ -91,7 +91,43 @@ int main()
 
 void postOrderIterativeS1(BSTNode *root)
 {
-	 /* add your code here */
+	// 스택(**stack**)을 사용하여 이진 탐색 트리의 후위 순회(post-order traversal)를 출력하는 
+	// 반복적 C 함수 `postOrderIterativeS1()`을 작성하세요.
+	// **정수를 스택에 추가하거나 제거할 때는 반드시 `push()` 또는 `pop()` 연산만 사용해야 합니다.**
+	// 또한, 함수 시작 시 **스택이 비어있지 않다면 먼저 스택을 비워야 합니다.**
+	Stack s;
+	s.top = NULL;
+
+	BSTNode *current = root;
+	BSTNode *lastVisited = NULL;
+
+	while (current != NULL || !isEmpty(&s))
+	{
+			if (current != NULL)
+			{
+					// 현재 노드를 스택 s에 push한 후 왼쪽 자식으로 이동합니다.
+					push(&s, current);
+					current = current->left;
+			}
+			else
+			{
+					// 스택 s의 top에 있는 노드를 확인합니다.
+					BSTNode *peekNode = peek(&s);
+					// 만약 peek한 노드의 오른쪽 자식이 존재하고, 아직 방문하지 않았다면
+					if (peekNode->right != NULL && lastVisited != peekNode->right)
+					{
+							// 오른쪽 서브트리를 처리하기 위해 current를 오른쪽 자식으로 설정합니다.
+							current = peekNode->right;
+					}
+					else
+					{
+							// 오른쪽 자식이 없거나 이미 방문한 경우,
+							// 스택 s에서 노드를 pop하여 출력한 후, 마지막 방문 노드로 저장합니다.
+							printf("%d ", peekNode->item);
+							lastVisited = pop(&s);
+					}
+			}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

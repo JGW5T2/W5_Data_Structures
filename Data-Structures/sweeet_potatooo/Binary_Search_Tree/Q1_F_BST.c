@@ -96,7 +96,31 @@ void levelOrderTraversal(BSTNode* root)
 	// `levelOrderTraversal` 함수는 큐(queue)를 사용하여 이진 트리를 레벨 순서(수준별)로 순회하며 출력합니다. 
 	// 순회는 루트 노드 레벨부터 시작합니다. 이때 정수를 큐에 추가하거나 제거할 때는 반드시 `enqueue()` 또는 `dequeue()` 연산만 사용해야 합니다.
 	// 또한 함수가 시작될 때, 큐가 비어 있지 않다면 **큐를 비운 상태로 시작**해야 합니다.
-    
+	
+	// 루트가 NULL이면 아무것도 하지 않는다.
+	// 큐에 루트를 먼저 넣는다.
+	// 큐가 빌 때까지 반복:
+	// 노드를 하나 꺼내서 출력.
+	// 왼쪽 자식이 있으면 큐에 넣는다.
+	// 오른쪽 자식이 있으면 큐에 넣는다.
+
+	if(root ==NULL){
+		return;
+	}
+	QueueNode *head = NULL, *tail =NULL;
+	enqueue(&head , &tail, root);
+
+	while (!isEmpty(head)) {
+		BSTNode *current = dequeue(&head, &tail);
+		printf("%d ", current->item);
+		
+		if(current->left != NULL)
+			enqueue(&head, &tail, current->left);
+
+			if(current->right != NULL)
+			enqueue(&head, &tail, current->right);
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
