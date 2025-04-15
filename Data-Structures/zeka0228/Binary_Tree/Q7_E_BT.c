@@ -100,18 +100,18 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int smallestValue(BTNode *node)
+int smallestValue(BTNode *node) //가장 작은ㄱ ㅓ찾기
 {
 	if(node == NULL)
-        return 1e9;
-    int checker = node->item;
-    int L = smallestValue(node->left);
-    int R = smallestValue(node->right);
+        return 1e9; //없으면 얜 무시하기 위해 가장 큰거 만들어주기
+    int checker = node->item;  //지금 값 저장
+    int L = smallestValue(node->left); //하위 최소값을
+    int R = smallestValue(node->right); //일단 찾아주고
 
-    if(L<checker)
+    if(L<checker) //왼 비교
         checker = L;
     
-    if(R<checker)
+    if(R<checker) //오 비교
         checker = R;
     
     return checker;

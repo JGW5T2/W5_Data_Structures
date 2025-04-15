@@ -103,16 +103,16 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void mirrorTree(BTNode *node)
+void mirrorTree(BTNode *node) //트리 거울상 
 {   
-    if(node == NULL) return;
-    if(node->left == NULL && node->right == NULL) return;
-	mirrorTree(node->left);
-    mirrorTree(node->right);
+    if(node == NULL) return; //비어있으면 패스스
+    if(node->left == NULL && node->right == NULL) return; //자식이 없어도 패스
+	mirrorTree(node->left); //왼쪽부터
+    mirrorTree(node->right); //오른쪽으로
 
-    BTNode *checker = node->left;
-    node->left = node->right;
-    node->right = checker;
+    BTNode *checker = node->left; //체커를 만들어서 왼쪽을 담고
+    node->left = node->right; //왼쪽을 오른쪽으로 바꿔치기 해주고
+    node->right = checker; //저장된 왼쪽(체커)을 오른쪽에
     return;
 }
 

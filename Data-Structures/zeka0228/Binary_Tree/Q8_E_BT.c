@@ -101,21 +101,21 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int hasGreatGrandchild(BTNode *node)
+int hasGreatGrandchild(BTNode *node)  //증조할아버지 포지션이면 출력해주기
 {
-    if(node == NULL) return 0;
-	int checker = 0;
-    int ML = hasGreatGrandchild(node->left);
-    int MR = hasGreatGrandchild(node->right);
-    if(node->left != NULL || node->right != NULL) 
+    if(node == NULL) return 0; 
+	int checker = 0; //본인의 자식 최대 세대 수를 저장
+    int ML = hasGreatGrandchild(node->left); //왼쪽 자식 세대 최대
+    int MR = hasGreatGrandchild(node->right); //오른쪽 자식 세대 최대
+    if(node->left != NULL || node->right != NULL)  //하나라도 존재하면 +1
         checker += 1;
     
-    if (ML > MR)
+    if (ML > MR)   //까서 나온거중에
         checker+= ML;
-    else
+    else           //더 높은 값에 +1
         checker+=MR;
     
-    if(checker >= 3)
+    if(checker >= 3) //3이상이면 출력
         printf("%d ", node->item);
     
     return checker;

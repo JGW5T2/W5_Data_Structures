@@ -103,12 +103,12 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void printSmallerValues(BTNode *node, int m)
+void printSmallerValues(BTNode *node, int m)//m보다 작기만 하면 출력
 {
     if (node == NULL) return;
 
-	if (m > node->item)
-        printf("%d ", node->item);
+	if (m > node->item) //그냥 작기만하면
+        printf("%d ", node->item); //출력
     
     printSmallerValues(node->left, m);
     printSmallerValues(node->right, m);

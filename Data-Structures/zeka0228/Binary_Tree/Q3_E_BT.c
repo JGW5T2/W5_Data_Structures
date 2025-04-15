@@ -98,29 +98,29 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-
+//자식이 하나인 노드만 카운트하기
 int countOneChildNodes(BTNode *node){
     int count;
 
-    if(node == NULL) return 0;
+    if(node == NULL) return 0;    //노드가 비었으면 패스
 
     if(node->left == NULL){
-        if(node->right == NULL) return 0;
+        if(node->right == NULL) return 0; //둘다 비었으면 패스
 
-        count = countOneChildNodes(node->right) +1 ;
-        return count;
+        count = countOneChildNodes(node->right) +1 ; //하나만 비었으니 함수를 돌리고 나온 값에 +1
+        return count; //반환
     }
 
-    if(node->right == NULL){
+    if(node->right == NULL){   //이거도 하나만 존재하는거니까 똑같이
         count = countOneChildNodes(node->left) +1;
         return count;
     }
 
-    count = countOneChildNodes(node->right) + countOneChildNodes(node->left);
-    return count;
+    count = countOneChildNodes(node->right) + countOneChildNodes(node->left); // 둘다 존재하면 둘다 넣어
+    return count; 
 
 }
-//checkcccc
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////

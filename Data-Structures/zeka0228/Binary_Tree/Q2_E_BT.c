@@ -93,16 +93,16 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+//가장 큰 높이는 몇이냐냐
 int maxHeight(BTNode *node)
 {
         int count, L, R;
     if (node == NULL)
         return -1;
-    L = maxHeight(node->left);
-    R = maxHeight(node->right);
+    L = maxHeight(node->left); //가장 큰 높이는 몇이냐 근데 왼쪽으로 가서 찾아
+    R = maxHeight(node->right); //가장 큰 높이는 몇이냐 근데 오른쪽으로 가서 찾아
 
-    if(L > R)
+    if(L > R)  // 왼오 비교 
         count = L + 1;
     else
         count = R + 1;

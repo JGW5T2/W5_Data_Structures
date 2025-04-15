@@ -100,18 +100,18 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-int sumOfOddNodes(BTNode *node)
+int sumOfOddNodes(BTNode *node) //홀수 노드 더하기
 
 {
-    int S = 0;
-    if(node == NULL) return 0;
+    int S = 0;   
+    if(node == NULL) return 0; //비었으면 0
 
-    if(node->item % 2 == 1)
+    if(node->item % 2 == 1) //홀수니까 더해주기기
         S += node->item;
 
-    return S + sumOfOddNodes(node->left) + sumOfOddNodes(node->right);
+    return S + sumOfOddNodes(node->left) + sumOfOddNodes(node->right); //그게게 이제 양쪽 밑에서부터 올라오는거 
 }
-//c
+
 //////////////////////////////////////////////////////////////////////////////////
 
 BTNode *createBTNode(int item)

@@ -99,22 +99,22 @@ int main()
     return 0;
 }
 
-
+//이 트리가 동일하니 안하니
 int identical(BTNode *tree1, BTNode *tree2){
 
-    if (tree1 == NULL && tree2 == NULL)  
+    if (tree1 == NULL && tree2 == NULL) //둘다 없다  
         return 1;
 
-    if (tree1 == NULL || tree2 == NULL)  
+    if (tree1 == NULL || tree2 == NULL)  //둘중 하나만 있다 -> 다르다
         return 0;
     
-    if(tree1->item != tree2->item)
+    if(tree1->item != tree2->item) //두 값이 다르다 -> 다르다
         return 0;
 
-    if (identical(tree1->left, tree2->left) == 0)
+    if (identical(tree1->left, tree2->left) == 0) // 두 값이 다른가? 왼쪽버전
         return 0;
 
-    if (identical(tree1->right, tree2->right) == 0)
+    if (identical(tree1->right, tree2->right) == 0) // 두 값이 다른가? 오른쪽버전
         return 0;
 
     return 1;
