@@ -109,9 +109,10 @@ int main()
 
 void recursiveReverse(Queue *q)
 {
+	// 큐가 비머있으며-> 함수 종료
 	if (isEmptyQueue(q))
 	return;
-
+	// 프론트에 큐값저장 
 	int front = dequeue(q);
 
 	recursiveReverse(q);

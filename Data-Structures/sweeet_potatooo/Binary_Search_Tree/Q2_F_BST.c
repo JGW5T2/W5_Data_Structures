@@ -90,7 +90,34 @@ int main()
 
 void inOrderTraversal(BSTNode *root)
 {
-	 /* add your code here */
+	// 스택(**stack**)을 사용하여 이진 탐색 트리의 **중위 순회(in-order traversal)**를 출력하는 반복적 C 함수 `inOrderIterative()`를 작성하세요.
+	// **정수를 스택에 추가하거나 제거할 때는 반드시 `push()` 또는 `pop()` 연산만 사용해야 합니다.**
+	// 또한, 함수 시작 시 **스택이 비어있지 않다면 먼저 스택을 비워야 합니다.**
+
+	Stack s;
+	s.top = NULL;
+
+	BSTNode *current = root;
+
+	// 스택이 안비어있으면 먼저 비움
+	while (!isEmpty(&s)) {
+		pop(&s);
+	}
+
+	while (current != NULL || !isEmpty(&s)) {
+		// 왼쪽 자식들 모두 스택에 넣음
+		while (current != NULL) {
+			push(&s, current);
+			current = current->left;
+		}
+
+		// 왼쪽 끝까지 갔으면 하나 pop해서 출력
+		current = pop(&s);
+		printf("%d ", current->item);
+
+		// 오른쪽으로 이동
+		current = current->right;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

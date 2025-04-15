@@ -91,7 +91,32 @@ int main()
 
 void preOrderIterative(BSTNode *root)
 {
-	 /* add your code here */
+// 	스택(**stack**)을 사용하여 이진 탐색 트리의 전위 순회(pre-order traversal)를 출력하는 
+//  반복적 C 함수 `preOrderIterative()`를 작성하세요.
+//  **정수를 스택에 추가하거나 제거할 때는 반드시 `push()` 또는 `pop()` 연산만 사용해야 합니다.**
+//  또한, 함수 시작 시 **스택이 비어있지 않다면 먼저 스택을 비워야 합니다.**
+
+	if (root == NULL)
+	return;
+
+Stack s;
+s.top = NULL;
+
+push(&s, root);
+
+while (!isEmpty(&s)) {
+	BSTNode *current = pop(&s);
+	printf("%d ", current->item);  
+	// 1. 루트 방문
+
+	// 2. 오른쪽 자식을 먼저 push
+	if (current->right != NULL)
+			push(&s, current->right);
+
+	// 3. 왼쪽 자식을 나중에 push
+	if (current->left != NULL)
+			push(&s, current->left);
+}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
