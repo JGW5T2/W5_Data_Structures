@@ -112,27 +112,40 @@ int main()
 
 void reverse(Queue *q)
 {
-	//큐에서 팝한다
-	//스택에 푸시한다
-	//스택에서 팝한다
-	//큐에 푸시한다
-	//큐가 비어있지 않으면 반복한다
-	Stack s;
-	s.ll.head = NULL;
-	s.ll.size = 0;
-	s.ll.tail = NULL;
+		// 스택(**stack**)을 사용하여 큐를 뒤집는 C 함수 `reverseQueue()`를 작성하세요.
 
-	int item;
-	while (!isEmptyQueue(q)) {
-		item = dequeue(q);
-		push(&s, item);
-	}
-	
-	while (!isEmptyStack(&s)) {
-		item = pop(&s);
-		enqueue(q, item);
-	}
+		// - `reverseQueue()` 함수는 정수를 스택에 추가하거나 제거할 때 **반드시 `push()`와 `pop()`만 사용해야 하며**, 
+		// - 큐에서 정수를 추가하거나 제거할 때는 **반드시 `enqueue()`와`dequeue()`만 사용**해야 합니다.
+		// - 함수 시작 시, 스택이 비어 있지 않다면 스택을 먼저 비워야 합니다.
+		// - 또한, 스택을 초기화하는 것도 잊지 마세요.
+
+    // 스택을 초기화한다 -> 큐의 요소 잠시 보관
+    Stack s;
+    s.ll.head = NULL;
+    s.ll.size = 0;
+    s.ll.tail = NULL;
+
+    int item;
+
+    // 큐가 빌 때까지 반복하면서
+    // 큐의 앞(front)에서 요소를 꺼내고(pop),
+    // 그 값을 스택에 넣는다 (push)
+    // -> 이렇게 하면 큐의 순서가 스택에 역순으로 쌓인다
+    while (!isEmptyQueue(q)) {
+        item = dequeue(q);   // 큐에서 꺼냄
+        push(&s, item);      // 스택에 넣음
+    }
+
+    // 스택이 빌 때까지 반복하면서
+    // 스택에서 요소를 꺼내고(pop),
+    // 그 값을 다시 큐에 넣는다 (enqueue)
+    // -> 스택은 LIFO이므로 꺼낸 순서가 큐에 역순으로 저장됨
+    while (!isEmptyStack(&s)) {
+        item = pop(&s);      // 스택에서 꺼냄
+        enqueue(q, item);    // 큐에 다시 넣음
+    }
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
