@@ -22,14 +22,14 @@ typedef struct _bstnode{
 typedef struct _QueueNode {
 	BSTNode *data;
 	struct _QueueNode *nextPtr;
-}QueueNode; // You should not change the definition of QueueNode
+} QueueNode; // You should not change the definition of QueueNode
 
 
 typedef struct _queue
 {
 	QueueNode *head;
 	QueueNode *tail;
-}Queue; // You should not change the definition of queue
+} Queue; // You should not change the definition of queue
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -92,6 +92,7 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 큐를 이용한 BFS 방식 레벨 순회
 void levelOrderTraversal(BSTNode* root)
 {
 
@@ -101,14 +102,14 @@ void levelOrderTraversal(BSTNode* root)
 	QueueNode *head = NULL;
 	QueueNode *tail = NULL;
 
-	enqueue(&head, &tail, root);
+	enqueue(&head, &tail, root); // 루트 노드를 큐에 넣음
 
 	while (!isEmpty(head))
 	{
-		BSTNode *current = dequeue(&head, &tail);
+		BSTNode *current = dequeue(&head, &tail); // 현재 노드 꺼냄
+		printf("%d ", current->item); // 출력
 
-		printf("%d ", current->item);
-
+		// 왼쪽, 오른쪽 자식이 있다면 큐에 추가
 		if (current->left != NULL)
 			enqueue(&head, &tail, current->left);
 
