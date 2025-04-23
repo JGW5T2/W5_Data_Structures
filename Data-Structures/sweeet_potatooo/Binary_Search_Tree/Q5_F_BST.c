@@ -102,29 +102,29 @@ void postOrderIterativeS2(BSTNode *root)
 	BSTNode *current = root;
 	BSTNode *lastVisited = NULL;
 
-	// current가 NULL이 아니거나 스택에 요소가 남아있는 동안 반복합니다.
+	// current가 NULL이 아니거나 스택에 요소가 남아있는 동안 반복
 	while (current != NULL || !isEmpty(&s))
 	{
 			if (current != NULL)
 			{
-					// 1. 현재 노드를 스택에 push하고, 왼쪽 자식으로 계속 내려갑니다.
+					// 1. 현재 노드를 스택에 push, 왼쪽 자식으로.
 					push(&s, current);
 					current = current->left;
 			}
 			else
 			{
-					// 스택의 top에 있는 노드를 확인합니다.
+					// 스택의 top에 있는 노드를 확인.
 					BSTNode *peekNode = peek(&s);
 					// 2. 만약 오른쪽 자식이 존재하며, 아직 방문하지 않았다면
 					if (peekNode->right != NULL && lastVisited != peekNode->right)
 					{
-							// 오른쪽 자식부터 처리하도록 current에 할당합니다.
+							// 오른쪽 자식부터 처리하도록 current에 할당.
 							current = peekNode->right;
 					}
 					else
 					{
 							// 3. 오른쪽 자식이 없거나 이미 방문한 경우,
-							// 스택에서 pop한 후 현재 노드를 출력합니다.
+							// 스택에서 pop한 후 현재 노드를 출력.
 							printf("%d ", peekNode->item);
 							lastVisited = pop(&s);
 					}
